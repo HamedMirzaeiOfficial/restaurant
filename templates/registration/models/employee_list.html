@@ -1,0 +1,75 @@
+{% extends 'registration/base.html' %}
+{% block title-page %} {% endblock %}
+<p>{{ user.get_full_name }}</p>
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            {% if object_list %}
+                <div class="card">
+                    <div class="card-header">
+                    <h3 class="card-title">Employee List</h3>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>firstname</th>
+                            <th>lastname</th>
+                            <th>image</th>
+                            <th>position</th>
+                            <th>description</th>
+                            <th>instagram</th>
+                            <th>tweeter</th>
+                            <th>facebook</th>
+                            <th>youtube</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for employee in object_list %}
+                                <tr>
+                                    <td> 
+                                        {% if user.is_superuser %}
+                                            <a href="{% url 'account:employee_update' employee.pk %}" target='_blank'>{{ employee.first_name }}</a>
+                                        {% else %}
+                                            {{ employee.first_name }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ employee.last_name }}</td>
+                                    <td><img src="{{ employee.image.url }}" width="150" height='120'></td>
+                                    <td>{{ employee.position|safe }}</td>
+                                    <td>{{ employee.description|safe }}</td>
+                                    <td>{{ employee.instagram }}</td>
+                                    <td>{{ employee.tweeter }}</td>
+                                    <td>{{ employee.facebook }}</td>
+                                    <td>{{ employee.youtube }}</td>
+                                    <td>
+                                        {% if user.is_superuser %}
+                                            <a class="badge badge-danger" href='{% url 'account:employee_delete' employee.pk %}'>Delete</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            {% else %}
+                <h4 class="py-3 mt-4 text-center text-primary">there is no detail to show.</h4>
+            {% endif %}
+        <!-- /.card -->
+        </div>
+    </div>
+{% endblock %}

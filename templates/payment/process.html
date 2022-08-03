@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+    <style>
+         .inf-content{
+            border:1px solid #DDDDDD;
+            border-radius:10px;
+            box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3); 
+            }			                                                      
+    </style>
+
+<head>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Order Confirmation</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" />    
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body> 
+    <div class="container bootstrap snippets bootdey p-5 mt-5">
+        <div class="panel-body inf-content">
+            <div class="bg-primary text-white p-2 text-center inf-content"> 
+                <h5>Confirm your information</h5>
+            </div>
+            <div class="row">
+                <div class="col-md-12">                    
+                    <div class="table-responsive mt-3">
+                    <table class="table">
+                        <tbody>
+                            <tr>        
+                                <td>
+                                    <strong class="pl-3">first name</strong>
+                                </td>
+                                <td class="text-primary text-center">
+                                    {{ order.first_name }}     
+                                </td>
+                            </tr>
+                            <tr>    
+                                <td>
+                                    <strong class="pl-3">last name</strong>
+                                </td>
+                                <td class="text-primary text-center">
+                                    {{ order.last_name }}     
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong class="pl-3">city</strong>
+                                </td>
+                                <td class="text-primary text-center">
+                                    {{ order.city }}  
+                                </td>
+                            </tr>
+        
+                            <tr>        
+                                <td>
+                                    <strong class="pl-3">address</strong>
+                                </td>
+                                <td class="text-primary text-center">
+                                    {{ order.address }}  
+                                </td>
+                            </tr>
+        
+        
+                            <tr>  
+                                <td>
+                                    <strong class="pl-3">postal code</strong>
+                                </td>
+                                <td class="text-primary text-center">
+                                    {{ order.postal_code }}  
+                                </td>      
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong class="pl-3">phone number</strong>
+                                </td>
+                                <td class="text-primary text-center">
+                                    {{ order.phone }}  
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong class="pl-3">email</strong>
+                                </td>
+                                <td class="text-primary text-center">
+                                    {{ order.email }}  
+                                </td>
+                            </tr>                                    
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center row justify-content-center">
+                <form method='post'>
+                    {{form.as_p}}
+                    {% csrf_token %}
+                    <input type='submit' class="btn btn-success text-white m-3" value="Confirm">    
+                </form>
+                
+            </div>
+        </div>
+        </div>      
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+

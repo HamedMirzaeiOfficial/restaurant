@@ -1,0 +1,39 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}Contact Detail{% endblock %}
+
+
+{% block main %}
+<div class="col-md-12 mx-auto py-4 text-center">
+    <!-- general form elements -->
+
+    <div class="list-group">
+        <div type="button" class="list-group-item bg-info">Contact Detail</div>
+        
+        <div type="button" class="list-group-item py-4">
+            <table>
+                <th>name: </th>
+                <td>{{ contact.name }}</td>
+            </table>
+        </div>
+
+        <div type="button" class="list-group-item py-4">
+            <table>
+                <th>email: </th>
+                <td>
+                    <a href="#">{{ contact.email }} </a>
+                </td>
+            </table>
+        </div>
+        <div type="button" class="list-group-item py-4">
+            <p>
+                {{ contact.message }}
+            </p> 
+        </div>
+       
+    </div>
+            
+            
+            
+            
+{% endblock %}

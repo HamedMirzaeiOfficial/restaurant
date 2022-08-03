@@ -1,0 +1,264 @@
+{% load static %}
+{% load gravatar %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+   <!-- Brand Logo -->
+   <a href="{% url 'account:home' %}" class="brand-link">
+   <img src="{% static 'registration/admin_lte/assets/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      style="opacity: .8">
+   <span class="brand-text font-weight-light">Simple House</span>
+   </a>
+   <!-- Sidebar -->
+   <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+         <div class="image">
+            <img src='{% gravatar_url user.email 150 %}' class="img-circle elevation-2" alt="{{ user.email }}">
+         </div>
+         <div class="info">
+            <a href="#" class="d-block">
+            {% if user.get_full_name %}
+            {{ user.get_full_name }}
+            {% else %}
+            {{ user.username }}
+            {% endif %}
+            </a>
+         </div>
+      </div>
+      <!-- Sidebar Menu -->
+      <nav class="mt-2 pr-2">
+         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            {% if user.is_superuser %}
+            
+               <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'home'%} menu-open {% endif %}">
+                  <a href="{% url 'account:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %} active {% endif %}">
+                     <i class="nav-icon fa-solid fa-house"></i>
+                     <p>
+                        Home
+                     </p>
+                  </a>
+               </li> 
+                     
+<!--               
+               <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'article_create' %} menu-open {% endif %}">
+                 <a href="#" class="nav-link {% if request.resolver_match.url_name == 'home' or request.resolver_match.url_name == 'article_create'%} active {% endif %}">
+                   <i class="nav-icon fas fa-tachometer-alt"></i>
+                   <p>
+                     statistics
+                     <i class="right fas fa-angle-left"></i>
+                   </p>
+                 </a>
+                 <ul class="nav nav-treeview">
+                   <li class="nav-item">
+                     <a href="{% url 'account:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home'%} active {% endif %}">
+                       <i class="fa fa-list nav-icon"></i>
+                       <p>Orders</p>
+                     </a>
+                   </li>
+                   <li class="nav-item">
+                     <a href="{% url 'account:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home'%} active {% endif %}">
+                       <i class="fa fa-list nav-icon"></i>
+                       <p>Foods</p>
+                     </a>
+                   </li>
+                 </ul>
+               </li> -->
+            <li class="nav-item has-treeview {% if request.resolver_match.url_name in 'food_list, food_create, food_update, food_delete, category_list, category_create, category_update, category_delete, employee_list, employee_create, employee_update, employee_delete, about_create, about_update, contact_list, contact_delete, contact_detail, address_create, address_update, history_create, history_update, order_list' %} menu-open {% endif %}">
+               <a href="#" class="nav-link {% if request.resolver_match.url_name == 'food_list' or request.resolver_match.url_name == 'food_create' %} active-2 {% endif %}">
+                  <i class="nav-icon fa-solid fa-database"></i>
+                  <p>
+                     Models
+                     <i class="right fas fa-angle-left"></i>
+                  </p>
+               </a>
+               <ul class="nav nav-treeview ml-4">
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'food_list' or request.resolver_match.url_name == 'food_create' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'food_list' or request.resolver_match.url_name == 'food_create' %} active-2 {% endif %}">
+                        <p>
+                           Food
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:food_list' %}" class="nav-link {% if request.resolver_match.url_name == 'food_list'%} active {% endif %}">
+                              <i class="fa fa-list nav-icon"></i>
+                              <p>Food List</p>
+                           </a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="{% url 'account:food_create' %}" class="nav-link {% if request.resolver_match.url_name == 'food_create'%} active {% endif %}">
+                              <i class="fa fa-edit nav-icon"></i>
+                              <p>Add a Food</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'category_list' or request.resolver_match.url_name == 'category_create' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'category_list' or request.resolver_match.url_name == 'category_create'%} active-2 {% endif %}">
+                        <p>
+                           Category
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:category_list' %}" class="nav-link {% if request.resolver_match.url_name == 'category_list'%} active {% endif %}">
+                              <i class="fa fa-list nav-icon"></i>
+                              <p>Category List</p>
+                           </a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="{% url 'account:category_create' %}" class="nav-link {% if request.resolver_match.url_name == 'category_create'%} active {% endif %}">
+                              <i class="fa fa-edit nav-icon"></i>
+                              <p>Add a Category</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li> 
+
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'order_list' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'order_list' %} active-2 {% endif %}">
+                        <p>
+                           Order
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:order_list' %}" class="nav-link {% if request.resolver_match.url_name == 'order_list'%} active {% endif %}">
+                              <i class="fa fa-list nav-icon"></i>
+                              <p>Order List</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li> 
+
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'employee_list' or request.resolver_match.url_name == 'employee_create' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'employee_list' or request.resolver_match.url_name == 'employee_create'%} active-2 {% endif %}">
+                        <p>
+                           Employee
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:employee_list' %}" class="nav-link {% if request.resolver_match.url_name == 'employee_list'%} active {% endif %}">
+                              <i class="fa fa-list nav-icon"></i>
+                              <p>Employee List</p>
+                           </a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="{% url 'account:employee_create' %}" class="nav-link {% if request.resolver_match.url_name == 'employee_create'%} active {% endif %}">
+                              <i class="fa fa-edit nav-icon"></i>
+                              <p>Add a Employee</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'contact_list' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'contact_list' %} active-2 {% endif %}">
+                        <p>
+                           Contact
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:contact_list' %}" class="nav-link {% if request.resolver_match.url_name == 'contact_list'%} active {% endif %}">
+                              <i class="fa fa-list nav-icon"></i>
+                              <p>Contact List</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'about_create' or request.resolver_match.url_name == 'about_update' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'about_create' or request.resolver_match.url_name == 'about_update' %} active-2 {% endif %}">
+                        <p>
+                           About
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:about_create' %}" class="nav-link {% if request.resolver_match.url_name == 'about_create'%} active {% endif %}">
+                              <i class="fa fa-edit nav-icon"></i>
+                              <p>Add or Edit About</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'history_create' or request.resolver_match.url_name == 'history_update' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'history_create' or request.resolver_match.url_name == 'history_update' %} active-2 {% endif %}">
+                        <p>
+                           History
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:history_create' %}" class="nav-link {% if request.resolver_match.url_name == 'history_create'%} active {% endif %}">
+                              <i class="fa fa-edit nav-icon"></i>
+                              <p>Add or Edit History</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'address_create' or request.resolver_match.url_name == 'address_update' %} menu-open {% endif %}">
+                     <a href="#" class="nav-link {% if request.resolver_match.url_name == 'address_create' or request.resolver_match.url_name == 'address_update' %} active-2 {% endif %}">
+                        <p>
+                           Address
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="{% url 'account:address_create' %}" class="nav-link {% if request.resolver_match.url_name == 'address_create'%} active {% endif %}">
+                              <i class="fa fa-edit nav-icon"></i>
+                              <p>Add or Edit Address</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+
+               </ul>
+            </li>
+            {% endif %}
+
+
+            <li class="nav-item has-treeview {% if request.resolver_match.url_name == 'user_order_list' or request.resolver_match.url_name == 'profile' %} menu-open {% endif %}">
+               <a href="#" class="nav-link {% if request.resolver_match.url_name == 'user_order_list' or request.resolver_match.url_name == 'profile' %} active-2 {% endif %}">
+                  <i class="nav-icon fa-solid fa-user"></i>
+                  <p>
+                     Profile
+                     <i class="right fas fa-angle-left float-right"></i>
+                  </p>
+               </a>
+               <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                     <a href="{% url 'account:user_order_list' %}" class="nav-link {% if request.resolver_match.url_name == 'user_order_list'%} active {% endif %}">
+                        <i class="fa fa-list nav-icon"></i>
+                        <p>Your Orders</p>
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                     <a href="{% url 'account:profile' %}" class="nav-link {% if request.resolver_match.url_name == 'profile'%} active {% endif %}">
+                        <i class="fa fa-edit nav-icon"></i>
+                        <p>Your Information</p>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+
+         </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+   </div>
+   <!-- /.sidebar -->
+</aside>

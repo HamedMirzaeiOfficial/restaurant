@@ -1,0 +1,52 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+
+    {% if request.resolver_match.kwargs.pk %}
+        Update Category
+    {% else %}
+        Create Category
+    {% endif %}
+
+{% endblock %}
+
+<p>{{ user.get_full_name }}</p>
+
+{% block main %}
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title mb-0 float-left">
+                {% if request.resolver_match.kwargs.pk %}
+                    Update Category
+                {% else %}
+                    Create Category
+                {% endif %}
+            </h3>
+        </div>
+        <div class='card-body'>
+            <form method='post' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class='row'>
+                    <div class='col-6'>
+                        {{ form.name|as_crispy_field }}
+                    </div>
+                    
+                    <div class='col-6'>
+                        {{ form.slug|as_crispy_field }}
+                    </div>
+                </div>
+
+                {% if user.is_superuser and request.resolver_match.kwargs.pk %}
+                    <button class='btn btn-success m-3'>Update</button>
+                    <a href="{% url 'account:category_delete' request.resolver_match.kwargs.pk %}" class='btn btn-danger'>Delete</a>
+                {% else %}
+                    <button class='btn btn-success m-3'>Create</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

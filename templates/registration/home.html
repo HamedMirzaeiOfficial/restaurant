@@ -1,0 +1,106 @@
+{% extends 'registration/base.html' %}
+{% block title-page %}  {% endblock %}
+<p>{{ user.get_full_name }}</p>
+
+{% block main %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-transparent">
+                  <h3 class="card-title">Latest Orders</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover m-0">
+                      <thead>
+                          <tr>
+                              <th>Order ID</th>
+                              <th>Items</th>
+                              <th>Billing Status</th>
+                              <th>Total Paid</th>
+                              <th>City</th>
+                              <th>Address</th>
+                              <th>Postal Code</th>
+                              <th>Phone</th>
+                              <th>Email</th>
+                              <th>Order Time</th>
+                              <th>Information</th>
+                            </tr>
+                      </thead>
+                      <tbody>
+                          {% for order in orders %}
+                              <tr>
+                                  <td><a href="#">{{ order.pk }}</a></td>
+                                  <td>
+                                      {% for item in order.items.all %}
+                                        {{ item.product }}
+                                      {% endfor %}
+                                  </td>
+                                  <td> 
+                                      {% if order.get_billing_status == 'paid' %}
+                                          <span class="badge badge-success"> {{ order.get_billing_status }} </span>
+                                      {% else %}
+                                          <span class="badge badge-warning"> {{ order.get_billing_status }} </span>
+                                      {% endif %}
+                                  </td>
+                                  <td> {{ order.total_paid }} </td>
+                                  <td> {{ order.address }} </td>
+                                  <td> {{ order.city }} </td>
+                                  <td> {{ order.postal_code }} </td>
+                                  <td> {{ order.phone }} </td>
+                                  <td> {{ order.email }} </td>
+                                  <td> {{ order.created }} </td> 
+                                  <td> {{ order.additional_information }} </td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                  </div>
+                  <!-- /.table-responsive -->
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                  <a href="{% url 'account:order_list' %}" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+                </div>
+                <!-- /.card-footer -->
+              </div>
+        <!-- /.card -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Recently Added Food</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                  <ul class="products-list product-list-in-card pl-2 pr-2">
+
+                    {% for food in foods%}
+                      <li class="item">
+                        <div class="product-img">
+                          <img src="{{ food.image.url }}" width="150" height='120'>
+                        </div>
+                        <div class="product-info">
+                          <a href="javascript:void(0)" class="product-title">
+                            {{ food.name }}
+                            <span class="badge badge-warning float-right">${{ food.price }}</span></a>
+                            <span class="product-description"> {{ food.description }} </span>
+                        </div>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer text-center">
+                  <a href="{% url 'account:food_list' %}" class="uppercase">View All Foods</a>
+                </div>
+                <!-- /.card-footer -->
+              </div>
+        </div>
+    </div>
+{% endblock %}

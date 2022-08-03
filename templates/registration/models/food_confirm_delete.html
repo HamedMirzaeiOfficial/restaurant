@@ -1,0 +1,23 @@
+{% extends 'registration/base.html' %}
+
+{% block title %}Confirm delete food{% endblock %}
+
+
+{% block main %}
+<div class="col-md-8 mx-auto py-4 text-center">
+    <!-- general form elements -->
+    <div class="card card-danger">
+        <div class="card-header">
+            <h3 class="card-title mb-0 float-left">delete food</h3>
+        </div>
+        <div class='card-body'>
+            <form method='post' enctype="multipart/form-data">
+                {% csrf_token %}
+                <p class="py-2">Are you sure you want to delete "{{ food.title }}" ? </p>
+                
+                <button class='btn btn-danger'>Delete food</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'registration/base.html' %}
+{% block title-page %} {% endblock %}
+<p>{{ user.get_full_name }}</p>
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            {% if object_list %}
+                <div class="card">
+                    <div class="card-header">
+                    <h3 class="card-title">Food List</h3>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>image</th>
+                            <th>category</th>
+                            <th>description</th>
+                            <th>created</th>
+                            <th>delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for food in object_list %}
+                                <tr>
+                                    <td> 
+                                        {% if user.is_superuser %}
+                                            <a href="{% url 'account:food_update' food.pk %}" target='_blank'>{{ food.name }}</a>
+                                        {% else %}
+                                            {{ food.name }}
+                                        {% endif %}
+                                    </td>
+                                    <td><img src="{{ food.image.url }}" width="150" height='120'></td>
+                                    <td>{{ food.category }}</td>
+                                    <td>{{ food.description|striptags|truncatewords:5 }}</td>
+                                    <td>{{ food.created }}</td>
+                                    <td>
+                                        {% if user.is_superuser %}
+                                            <a class="badge badge-danger" href='{% url 'account:food_delete' food.pk %}'>Delete</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            {% else %}
+                <h4 class="py-3 mt-4 text-center text-primary">there is no detail to show.</h4>
+            {% endif %}
+        <!-- /.card -->
+        </div>
+    </div>
+{% endblock %}
+

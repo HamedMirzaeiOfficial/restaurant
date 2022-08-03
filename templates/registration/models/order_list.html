@@ -1,0 +1,78 @@
+{% extends 'registration/base.html' %}
+{% block title-page %} {% endblock %}
+<p>{{ user.get_full_name }}</p>
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            {% if object_list %}
+                <div class="card">
+                    <div class="card-header">
+                    <h3 class="card-title">Order List</h3>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Items</th>
+                                <th>Billing Status</th>
+                                <th>Total Paid</th>
+                                <th>City</th>
+                                <th>Address</th>
+                                <th>Postal Code</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Order Time</th>
+                                <th>Information</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in object_list %}
+                                <tr>
+                                    <td><a href="#">{{ order.pk }}</a></td>
+                                    <td>
+                                        {% for item in order.items.all %}
+                                            {{ item.product }}
+                                        {% endfor %}
+                                    </td>
+                                    <td> 
+                                        {% if order.get_billing_status == 'paid' %}
+                                            <span class="badge badge-success"> {{ order.get_billing_status }} </span>
+                                        {% else %}
+                                            <span class="badge badge-warning"> {{ order.get_billing_status }} </span>
+                                        {% endif %}
+                                    </td>
+                                    <td> {{ order.total_paid }} </td>
+                                    <td> {{ order.address }} </td>
+                                    <td> {{ order.city }} </td>
+                                    <td> {{ order.postal_code }} </td>
+                                    <td> {{ order.phone }} </td>
+                                    <td> {{ order.email }} </td>
+                                    <td> {{ order.created }} </td> 
+                                    <td> {{ order.additional_information }} </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            {% else %}
+                <h4 class="py-3 mt-4 text-center text-primary">there is no detail to show.</h4>
+            {% endif %}
+        <!-- /.card -->
+        </div>
+    </div>
+{% endblock %}
+

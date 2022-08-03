@@ -1,0 +1,68 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+
+    <header class="container mt-5 m-b-5">
+        <div class='row justify-content-center'> 
+            <h2 class="text-center">About Simple House</h2>
+        </div>
+        
+        <div class='row justify-content-center' style="padding-right:19px"> 
+            <p class="text-center">{{ about.description|safe }}</p>
+        </div>
+    </header>
+
+    <div class="tm-container-inner tm-persons mt-5">
+        <div class="row">
+            {% for employee in employees %}
+                <article class="col-sm-12 col-md-6 col-lg-6">
+                    <figure class="tm-person">
+                        <img src="{{ employee.image.url }}" alt="Image" class="img-fluid tm-person-img" />
+                        <figcaption class="tm-person-description">
+                            <h4 class="tm-person-name">{{ employee }}</h4>
+                            <p class="tm-person-title">{{ employee.position }}</p>
+                            <p class="tm-person-about">{{ employee.description }}</p>
+                            <div>
+                                <a href="{{ employee.facebook }}" class="tm-social-link"><i class="fab fa-facebook tm-social-icon"></i></a>
+                                <a href="{{ employee.twitter }}" class="tm-social-link"><i class="fab fa-twitter tm-social-icon"></i></a>
+                                <a href="{{ employee.instagram }}" class="tm-social-link"><i class="fab fa-instagram tm-social-icon"></i></a>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="tm-container-inner tm-featured-image">
+        <div class="row">
+            <div class="col-12">
+                <div class="placeholder-2">
+                    <div class="parallax-window-2" data-parallax="scroll" data-image-src="{% static 'img/about-05.jpg' %}"></div>		
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="tm-container-inner tm-history">
+        <div class="row">
+            <div class="col-12">
+                <div class="tm-history-inner">
+                    
+                    <img src="{% static 'img/about-06.jpg' %}" alt="Image" class="img-fluid tm-history-img" />
+                    <div class='tm-history-text'>
+                        <h4 class="tm-history-title">History of our restaurant</h4>
+                        <div class="tm-history-text"> 
+                            <p>
+                            {{ history.description|safe }}
+                            </p>
+                        </div>
+                    </div>
+                </div>	
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

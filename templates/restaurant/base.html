@@ -35,7 +35,7 @@
 								<li class="tm-nav-li"><a href="{% url 'restaurant:about' %}" class="tm-nav-link {% if request.resolver_match.url_name == "about" %}active{% endif %}">About</a></li>
 								<li class="tm-nav-li"><a href="{% url 'restaurant:contact' %}" class="tm-nav-link {% if request.resolver_match.url_name == "contact" %}active{% endif %}">Contact</a></li>
 								<li class="tm-nav-li"><a href="{% url 'cart:cart_detail' %}" class="tm-nav-link {% if request.resolver_match.url_name == "cart:cart_detail" %}active{% endif %}">Cart</a></li>
-								<li class="tm-nav-li"><a href="{% url 'login' %}" class="tm-nav-link {% if request.resolver_match.url_name == "login" %}active{% endif %}">login</a></li>
+								<li class="tm-nav-li"><a href="{% url 'account:profile' %}" class="tm-nav-link {% if request.resolver_match.url_name == "account:profile" %}active{% endif %}">Profile</a></li>
 							</ul>
 						</nav>	
 					</div>

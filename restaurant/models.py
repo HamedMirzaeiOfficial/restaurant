@@ -20,11 +20,9 @@ class SingletonBaseModel(models.Model):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
 
-
 class AvailableManager(models.Manager):
     def get_queryset(self):
         return super(AvailableManager, self).get_queryset().filter(available=True)
-
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -35,8 +33,6 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("restaurant:home_by_category", args=[self.slug])
-    
-
  
 class Food(models.Model):
     name = models.CharField(max_length=100, db_index=True)
@@ -62,7 +58,6 @@ class Food(models.Model):
     def get_absolute_url(self):
         return reverse('restaurant:food_detail', kwargs={'slug': self.slug})
         
-    
 class Employee(models.Model):
     first_name = models.CharField(max_length=100, verbose_name='first name')
     last_name = models.CharField(max_length=100, verbose_name='last name')
@@ -80,21 +75,17 @@ class Employee(models.Model):
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name 
     
-
-
 class About(SingletonBaseModel):
     description = HTMLField()
     
     def __str__(self) -> str:
         return self.description
 
-
 class History(SingletonBaseModel):
     description = HTMLField()   
 
     def __str__(self) -> str:
         return self.description
-
 
 class Address(SingletonBaseModel):
     description = models.TextField(max_length=200, verbose_name='full address')
@@ -107,7 +98,6 @@ class Address(SingletonBaseModel):
 
     def __str__(self) -> str:
         return self.description
-
 
 class Contact(models.Model):
     name = models.CharField(max_length=100)

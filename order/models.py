@@ -3,7 +3,6 @@ from django.db import models
 from coupon.models import Coupon
 from restaurant.models import Food
 from django.core.validators import MinValueValidator, MaxValueValidator
-from decimal import Decimal
 
 
 
@@ -22,11 +21,8 @@ class Order(models.Model):
     additional_information = models.TextField(blank=True, null=True)
     order_key = models.CharField(max_length=200)
     billing_status = models.BooleanField(default=False)
-    coupon = models.ForeignKey(Coupon, related_name='order', null=True,
-                               blank=True, on_delete=models.SET_NULL)
-
-    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), 
-                                    MaxValueValidator(100)])
+    coupon = models.ForeignKey(Coupon, related_name='order', null=True, blank=True, on_delete=models.SET_NULL)
+    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
                                     
     class Meta: 
         ordering = ('-created',)
@@ -37,12 +33,10 @@ class Order(models.Model):
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
-
     def get_discount(self):
         if self.coupon:
             return (self.coupon.discount / float((100))) * self.get_total_cost()
         return 0
-
 
     def get_total_cost_after_discount(self):
         return self.get_total_cost() - self.get_discount()

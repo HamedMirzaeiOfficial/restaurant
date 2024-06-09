@@ -24,7 +24,6 @@ class HomeView(ListView):
            
         return context
 
-
 class AboutView(ListView):
     model = Employee
     template_name = 'restaurant/about.html'
@@ -37,8 +36,6 @@ class AboutView(ListView):
         context['active'] = True
 
         return context
-
-
 
 class ContactView(CreateView):
     model = Contact

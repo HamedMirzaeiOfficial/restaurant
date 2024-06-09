@@ -13,13 +13,6 @@ def zpal_request_handler(merchant_id, amount, detail, user_email, user_phone_num
     else:
         return None, None
 
-
-
-
-        
-
-    
-
 def zpal_payment_checker(merchant_id, amount, authority):
     client = Client(settings.ZARINPAL['gateway_request_url'])
     result = client.service.PaymentVerification(merchant_id, authority, amount)

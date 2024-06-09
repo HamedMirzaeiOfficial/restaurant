@@ -26,7 +26,6 @@ class Home(SuperUserAccessMixin, ListView):
         context['foods'] = Food.objects.all()[0:5]
         return context
     
-
 class Profile(LoginRequiredMixin, UpdateView):
     model = User
     form_class = ProfileForm
@@ -43,7 +42,6 @@ class Profile(LoginRequiredMixin, UpdateView):
         })
         return kwargs
 
-
 class Login(LoginView):
     def get_success_url(self):
         user = self.request.user
@@ -52,10 +50,8 @@ class Login(LoginView):
         else:
             return reverse_lazy('account:profile')
 
-
 class PasswordChange(PasswordChangeView):
     success_url = reverse_lazy('account:password_change_done')
-
 
 class Register(CreateView):
     form_class = SignUpForm
@@ -78,7 +74,6 @@ class Register(CreateView):
         email.send()
         return HttpResponse('activation link was sent to your email. <a href="/login">ورود</a>')
 
-
 def activate(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -92,13 +87,10 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('activation link was expired!! <a href="/login"> try again.</a>')
 
-
-# food crud
-
+# ---------------------- Food CRUD ---------------------------
 class FoodList(SuperUserAccessMixin, ListView):
     template_name = 'registration/models/food_list.html'
     model = Food
-
 
 class FoodCreate(SuperUserAccessMixin, CreateView):
     model = Food
@@ -106,13 +98,11 @@ class FoodCreate(SuperUserAccessMixin, CreateView):
     fields = ('name', 'slug', 'image', 'price', 'description', 'category', 'available')
     success_url = reverse_lazy('account:food_list')
 
-
 class FoodUpdate(SuperUserAccessMixin, UpdateView):
     model = Food
     template_name = 'registration/models/food_create_update.html' 
     fields = ('name', 'slug', 'image', 'price', 'description', 'category', 'available')
     success_url = reverse_lazy('account:food_list')
-
 
 class FoodDelete(SuperUserAccessMixin, DeleteView):
     model = Food
@@ -120,11 +110,10 @@ class FoodDelete(SuperUserAccessMixin, DeleteView):
     template_name = 'registration/models/food_confirm_delete.html'
     
 
-# category crud
+# --------------------- Category CRUD ---------------------------
 class CategoryList(SuperUserAccessMixin, ListView):
     template_name = 'registration/models/category_list.html'
     model = Category
-
 
 class CategoryCreate(SuperUserAccessMixin, CreateView):
     model = Category
@@ -132,25 +121,21 @@ class CategoryCreate(SuperUserAccessMixin, CreateView):
     fields = ('name', 'slug')
     success_url = reverse_lazy('account:category_list')
 
-
 class CategoryUpdate(SuperUserAccessMixin, UpdateView):
     model = Category
     template_name = 'registration/models/category_create_update.html' 
     fields = ('name', 'slug')
     success_url = reverse_lazy('account:category_list')
 
-
 class CategoryDelete(SuperUserAccessMixin, DeleteView):
     model = Category
     success_url = reverse_lazy('account:category_list')
     template_name = 'registration/models/category_confirm_delete.html'
     
-
-# employee crud
+# --------------------- Employee CRUD ---------------------------
 class EmployeeList(SuperUserAccessMixin, ListView):
     template_name = 'registration/models/employee_list.html'
     model = Employee
-
 
 class EmployeeCreate(SuperUserAccessMixin, CreateView):
     model = Employee
@@ -158,7 +143,6 @@ class EmployeeCreate(SuperUserAccessMixin, CreateView):
     fields = ('first_name', 'last_name', 'image', 'position', 
             'description', 'instagram', 'tweeter', 'facebook', 'youtube')
     success_url = reverse_lazy('account:employee_list')
-
 
 class EmployeeUpdate(SuperUserAccessMixin, UpdateView):
     model = Employee
@@ -168,20 +152,17 @@ class EmployeeUpdate(SuperUserAccessMixin, UpdateView):
 
     success_url = reverse_lazy('account:employee_list')
 
-
 class EmployeeDelete(SuperUserAccessMixin, DeleteView):
     model = Employee
     success_url = reverse_lazy('account:employee_list')
     template_name = 'registration/models/employee_confirm_delete.html'
-    
 
-# about crud
+# --------------------- About CRUD ---------------------------
 class AboutCreate(SuperUserAccessMixin, CreateView):
     model = About
     template_name = 'registration/models/about_create_update.html' 
     fields = ('description', )
     success_url = reverse_lazy('account:about_update', kwargs={'pk': '1'})
-
 
 class AboutUpdate(SuperUserAccessMixin, UpdateView):
     model = About
@@ -189,32 +170,27 @@ class AboutUpdate(SuperUserAccessMixin, UpdateView):
     fields = ('description', )
     success_url = reverse_lazy('account:about_update', kwargs={'pk': '1'})
 
-
-# contact crud
+# --------------------- Contact CRUD ---------------------------
 class ContactList(SuperUserAccessMixin, ListView):
     template_name = 'registration/models/contact_list.html'
     model = Contact
 
-
 class ContactDetail(SuperUserAccessMixin, DetailView):
     model = Contact
     template_name = 'registration/models/contact_detail.html'
-
 
 class ContactDelete(SuperUserAccessMixin, DeleteView):
     model = Contact
     success_url = reverse_lazy('account:contact_list')
     template_name = 'registration/models/contact_confirm_delete.html'
     
-
-# address crud
+# --------------------- Address CRUD ---------------------------
 class AddressCreate(SuperUserAccessMixin, CreateView):
     model = Address
     template_name = 'registration/models/address_create_update.html' 
     fields = ('description', 'phone_number', 'email', 
                 'tweeter', 'facebook', 'instagram')
     success_url = reverse_lazy('account:address_update', kwargs={'pk': '1'})
-
 
 class AddressUpdate(SuperUserAccessMixin, UpdateView):
     model = Address
@@ -223,14 +199,12 @@ class AddressUpdate(SuperUserAccessMixin, UpdateView):
                 'tweeter', 'facebook', 'instagram')
     success_url = reverse_lazy('account:address_update', kwargs={'pk': '1'})
 
-
-# history crud
+# --------------------- History CRUD ---------------------------
 class HistoryCreate(SuperUserAccessMixin, CreateView):
     model = History
     template_name = 'registration/models/history_create_update.html' 
     fields = ('description', )
     success_url = reverse_lazy('account:history_update', kwargs={'pk': '1'})
-
 
 class HistoryUpdate(SuperUserAccessMixin, UpdateView):
     model = History
@@ -238,11 +212,9 @@ class HistoryUpdate(SuperUserAccessMixin, UpdateView):
     fields = ('description', )
     success_url = reverse_lazy('account:history_update', kwargs={'pk': '1'})
 
-
 class OrderList(SuperUserAccessMixin, ListView):
     model = Order
     template_name = 'registration/models/order_list.html'
-    
 
 class UserOrderList(LoginRequiredMixin, ListView):
     model = Order

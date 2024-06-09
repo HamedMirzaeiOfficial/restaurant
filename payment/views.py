@@ -12,7 +12,6 @@ class PaymentView(View):
     def get(self, request, *args, **kwargs):
         order = get_object_or_404(Order, id=request.session['order_id'])
         return render(request, self.template_name, {'order': order})   
-    
 
     def post(self, request, *args, **kwargs):
         order = get_object_or_404(Order, id=request.session['order_id'])
@@ -24,8 +23,6 @@ class PaymentView(View):
             return redirect(payment_link)
 
         return render(request, self.template_name)
-
-
 
 class VerifyView(View):
     template_name = 'payment/callback.html'

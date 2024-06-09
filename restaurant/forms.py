@@ -4,12 +4,6 @@ from .models import Contact
 
 class ContactForm(forms.ModelForm):
     class Meta:
-        # first_name = 'نام...'
-        # message = 'پیام خود را بنویسید...'
-        # first_name_label = 'نام'
-        # email_label = 'ایمیل'
-        # message_label = 'پیام'
-
         model = Contact
         fields = ('name', 'email', 'message')
 

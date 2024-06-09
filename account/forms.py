@@ -16,7 +16,6 @@ class ProfileForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name')
 
-
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=200)
     

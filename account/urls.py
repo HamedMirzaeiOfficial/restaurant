@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+
 app_name = 'account'
 
 
@@ -37,7 +38,5 @@ urlpatterns = [
     path('history/create/<int:pk>/', views.HistoryUpdate.as_view(), name='history_update'),
 
     path('order/list/', views.OrderList.as_view(), name='order_list'),
-    path('user_order/list/', views.UserOrderList.as_view(), name='user_order_list'),
-
-    
+    path('user_order/list/', views.UserOrderList.as_view(), name='user_order_list'),    
 ]

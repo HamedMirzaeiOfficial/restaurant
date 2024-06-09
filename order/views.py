@@ -1,11 +1,11 @@
 from decimal import Decimal
-from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from cart.cart import Cart
 from .forms import OrderCreateForm
 from .models import OrderItem, Order
 import uuid
+
 
 def order_create(request):
     cart = Cart(request)
@@ -44,7 +44,6 @@ def order_create(request):
         form = OrderCreateForm()
         return render(request, 'order/create_order.html',
                       {'cart': cart, 'form': form, 'order': order})
-
 
 def user_orders(request):
     user_id = request.user.id

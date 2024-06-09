@@ -27,9 +27,6 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = list(config('ALLOWED_HOSTS'))
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -94,8 +91,6 @@ DATABASES = {
     }
 }
 
-
-# AUTH_USER_MODEL = 'authentication.MyUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -169,4 +164,3 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
-

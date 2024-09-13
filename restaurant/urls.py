@@ -6,8 +6,8 @@ app_name = 'restaurant'
 
 
 urlpatterns = [
+    path('', views.HomeView.as_view(), name='home'),
+    path('category/<slug:slug>/', views.CategoryProductListView.as_view(), name='products_by_category'),
     path('about/', views.AboutView.as_view(), name='about'), 
     path('contact/', views.ContactView.as_view(), name='contact'), 
-    path('<slug>/', views.HomeView.as_view(), name='home_by_category'),
-    path('', views.HomeView.as_view(), name='home'), 
 ]

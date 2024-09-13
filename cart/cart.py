@@ -4,7 +4,6 @@ from restaurant.models import Food
 from coupon.models import Coupon
 from django.shortcuts import redirect
 
-
 class Cart(object):
     def __init__(self, request):
         """
@@ -31,7 +30,6 @@ class Cart(object):
         
         for product in products:
             cart[str(product.id)]['product'] = product
-
 
         for item in self.cart.values():
             item['price'] = int(item['price'])
@@ -74,15 +72,16 @@ class Cart(object):
             self.save()
 
     def decrement(self, product):
-        for key in self.cart:
-            if key == str(product.id):
-                self.cart[str(product.id)]['quantity'] -= 1
-                if self.cart[str(product.id)]['quantity'] < 1:
-                    return redirect('cart:cart_detail')
-                self.save()
-                break
+        """
+        Decrease the quantity of a product in the cart by 1.
+        """
+        product_id = str(product.id)
+        if product_id in self.cart:
+            self.cart[product_id]['quantity'] -= 1
+            if self.cart[product_id]['quantity'] < 1:
+                self.remove(product)
             else:
-                print("Something Wrong")
+                self.save()
 
     def clear(self):
         # remove cart from session
@@ -91,6 +90,22 @@ class Cart(object):
 
     def get_total_price(self):
         return sum(int(item['price']) * item['quantity'] for item in self.cart.values())
+
+    def get_item_quantity(self, product):
+        """
+        Get the quantity of a specific product in the cart.
+        """
+        product_id = str(product.id)
+        return self.cart[product_id]['quantity'] if product_id in self.cart else 0
+
+    def get_item_total_price(self, product):
+        """
+        Get the total price for a specific product in the cart.
+        """
+        product_id = str(product.id)
+        if product_id in self.cart:
+            return int(self.cart[product_id]['price']) * self.cart[product_id]['quantity']
+        return 0
 
     @property
     def coupon(self):

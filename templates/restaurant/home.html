@@ -3,76 +3,145 @@
 {% load static %}
 {% block title %}Home{% endblock %}
 {% block content %}
-	<header class="row d-flex justify-content-center mb-4 mt-4 p-3">
-		<h2 class="text-center tm-section-title">Welcome to Simple House</h2>
-		<p class="text-center">Total 3 HTML pages are included in this template. Header image has a parallax effect. You can feel free to download, edit and use this TemplateMo layout for your commercial or non-commercial websites.</p>
-	</header>
-	
-	<div class="d-flex justify-content-center">
-		<nav>
-			<ul>
-				{% for cat in categories %}
-					<li class="tm-paging-item">
-						<a href="{% url 'restaurant:home_by_category' cat.slug %}" class="btn btn-outline-success {% if category.slug == cat.slug %} active{% endif %}">
-							{{cat.name}}
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
-		</nav>
-	</div>
+    <header class="row d-flex justify-content-center mb-4 mt-4 p-3">
+        <h2 class="text-center tm-section-title display-4 text-primary">Welcome to Simple House</h2>
+        <p class="text-center text-muted">Explore our delicious menu across a variety of categories. Enjoy a seamless experience as you switch between categories without reloading the page!</p>
+    </header>
 
-	
-	<div class="container" >
+    <!-- Category Navigation -->
+    <div class="d-flex justify-content-center mb-4">
+        <nav>
+            <ul id="category-list" class="nav nav-pills">
+                <a href="#" class="nav-link category-btn btn-outline-success mb-2" data-slug="all">
+                    all
+                </a>
+                {% for cat in categories %}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link category-btn btn-outline-success mb-2" data-slug="{{ cat.slug }}">
+                            {{ cat.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
 
-		<div class='row'>
-			{% for food in foods %}
-			<div class="col-sm-4 col-md-4 col-lg-3 d-flex align-items-stretch mb-3">
-				<div class='card mx-auto' style="width: 20rem;" >
-					
-					<div class='card-header' >
-						<img class="card-img-top" src="{{ food.image.url }}" style='height: 200px' alt="image for {{ food.name }}">	
-					</div>
-				
-					<div class="card-body d-flex flex-column">
-						<p class="card-title text-center">{{ food.name }}</p>
-						<small class="card-text">{{ food.description|safe }}</small>
-					</div>
-					<div class='card-footer'>
-						<span class="card-text"><small class="text-muted">{{ food.price }} $</small></span>
-						<span class='float-right'>
-						<a href="{% url 'cart:cart_add' food.id %}"><i class="fas fa-cart-plus text-success" title="add to cart"></i></a>
-							
-						</span>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
+    <!-- Product Grid -->
+    <div class="container">
+        <div class='row' id="products-list">
+            {% for food in foods %}
+            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch mb-4">
+                <div class='card shadow-sm border-0'>
+                    <div class='card-header p-0 position-relative'>
+                        <img class="card-img-top rounded-top" src="{{ food.image.url }}" style='height: 200px; width: 240px; object-fit: cover;' alt="image for {{ food.name }}">
+                        <span class="badge badge-success position-absolute" style="top: 10px; right: 10px;">${{ food.price }}</span>
+                    </div>
 
-	</div>
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h5 class="card-title text-center font-weight-bold text-dark">{{ food.name }}</h5>
+                        <p class="card-text text-muted text-truncate">{{ food.description|safe }}</p>
+                    </div>
 
-
-
-
-	<hr>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6">
-				<figure class="tm-description-figure">
-					<img src="{% static 'img/gallery/01.jpg' %}" alt="Image" class="img-fluid" />
-				</figure>
-			</div>
-			<div class="col-md-6">
-				<div class="tm-description-box"> 
-					<h4 class="tm-gallery-title">Maecenas nulla neque</h4>
-					<p class="tm-mb-45">Redistributing this template as a downloadable ZIP file on any template collection site is strictly prohibited. You will need to <a rel="nofollow" href="https://templatemo.com/contact">talk to us</a> for additional permissions about our templates. Thank you.</p>
-					<a href="{% url 'restaurant:contact' %} " class="tm-btn tm-btn-default tm-right">Read More</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-		
+                    <div class='card-footer bg-transparent border-0'>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted small">Price: ${{ food.price }}</span>
+                            <a href="#" class="btn btn-outline-primary btn-sm btn-add-to-cart" data-url="{% url 'cart:cart_add' food.id %}">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}
+
+{% block js %}
+<!-- SweetAlert2 CSS and JS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Add product to cart
+        $(document).on('click', '.btn-add-to-cart', function(e) {
+            e.preventDefault();
+            var addToCartUrl = $(this).data('url'); 
+
+            $.ajax({
+                url: addToCartUrl,  
+                method: 'GET',
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Added to Cart!',
+                        text: response.message,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to add product to cart. Please try again.',
+                        icon: 'error',
+                    });
+                }
+            });
+        });
+
+        // Handle category switching
+        $('.category-btn').click(function(e) {
+            e.preventDefault();
+            var slug = $(this).data('slug');
+
+            var url = "{% url 'restaurant:products_by_category' 'dummy-slug' %}".replace('dummy-slug', slug);
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(response) {
+                    var productsHtml = '';
+                    if (response.products && response.products.length > 0) {
+                        response.products.forEach(function(product) {
+                            productsHtml += `
+                            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch mb-4">
+                                <div class='card shadow-sm border-0'>
+                                    <div class='card-header p-0 position-relative'>
+                                        <img class="card-img-top rounded-top" src="${product.image}" style='height: 200px; width: 240px; object-fit: cover;' alt="image for ${product.name}">
+                                        <span class="badge badge-success position-absolute" style="top: 10px; right: 10px;">${product.price} $</span>
+                                    </div>
+                                    <div class="card-body d-flex flex-column justify-content-between">
+                                        <h5 class="card-title text-center font-weight-bold text-dark">${product.name}</h5>
+                                        <p class="card-text text-muted text-truncate">${product.description}</p>
+                                    </div>
+                                    <div class='card-footer bg-transparent border-0'>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-muted small">Price: ${product.price} $</span>
+                                            <a href="#" class="btn btn-outline-primary btn-sm btn-add-to-cart" data-url="/cart/add/${product.id}/">
+                                                <i class="fas fa-cart-plus"></i> Add to Cart
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        });
+                    } else {
+                        productsHtml = '<p>No products available in this category.</p>';
+                    }
+                    $('#products-list').html(productsHtml);
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'An error occurred while loading the products.',
+                        icon: 'error',
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

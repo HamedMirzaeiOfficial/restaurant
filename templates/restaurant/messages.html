@@ -1,0 +1,21 @@
+{% if messages %}
+    <div class="notification-container">
+        {% for message in messages %}
+            <div class="notification alert-{{ message.tags }}">
+                <span class="notification-icon">
+                    {% if message.tags == 'success' %}
+                        ✔️
+                    {% elif message.tags == 'warning' %}
+                        ⚠️
+                    {% elif message.tags == 'error' %}
+                        ❌
+                    {% elif message.tags == 'info' %}
+                        ℹ️
+                    {% endif %}
+                </span>
+                <span class="notification-message">{{ message }}</span>
+                <button class="close-btn" onclick="this.parentElement.style.display='none';">×</button>
+            </div>
+        {% endfor %}
+    </div>  
+{% endif %}
